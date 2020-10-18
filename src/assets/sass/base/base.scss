@@ -1,0 +1,12 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  /* It changes the box model so that the border and padding aren't added to total width or height */
+}
+
+body {
+  box-sizing: border-box;
+}
