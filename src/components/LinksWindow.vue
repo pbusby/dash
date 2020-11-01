@@ -31,7 +31,7 @@
                         <li>cool link 5</li>
                         <li>cool link 6</li>
                     </ul>
-                    <h3 style="color: black;" @click.stop="activateAddLinkMenu">+ Add Link</h3>
+                    
                 </div>
                 <!-- </transition> -->
                 
@@ -51,6 +51,9 @@
                         <!-- </transition> -->
                     </div>
                 
+            </div>
+            <div v-if="!addLinkActive" class="links-window__add-link-button" :class="{'onscreen-left': addLinkActive, 'offscreen-left': !addLinkActive}">
+                <h3 style="" @click.stop="activateAddLinkMenu">+ Add Link</h3>
             </div>
         </div>
     </div>
@@ -79,36 +82,14 @@ export default {
             const child1 = document.querySelector('.links-list');
             const child2 = document.querySelector('.add-link-menu');
             if (child1.offsetHeight > child2.offsetHeight && !this.addLinkActive) {
-                // return child1.offsetHeight; 
                 parent.style.height = `${child1.offsetHeight}px`;
             } else {
-                // return child2.offsetHeight;
                 parent.style.height = `${child2.offsetHeight}px`;
-            }
-            // var parentHeight = $('#parent').height(),
-            // childHeight = $('#child').height();
-
-            // if (parentHeight <= childHeight) {
-            // $('#parent').height(childHeight);
-
-        }
-    },
-    computed: {
-        magicalHeight() {
-            // debugger // eslint-disable-line
-            // const parent = document.querySelector('.links-window');
-            const child1 = document.querySelector('.links-list');
-            const child2 = document.querySelector('.add-link-menu');
-            if (child1 && child2 && (child1.offsetHeight > child2.offsetHeight)) {
-                return child1.offsetHeight; 
-            } else {
-                return child2.offsetHeight;
             }
         }
     },
 
     mounted() {
-        // debugger // eslint-disable-line
         this.calculateMenuHeight();
     }
     
