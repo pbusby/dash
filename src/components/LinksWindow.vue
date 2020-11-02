@@ -1,16 +1,24 @@
 <template>
-    <div>
-        <div class="dropdown-triangle" style="position: absolute; top: 30px; left: 30px;"></div>
-        <div style="position: absolute; top: 40px;">
-            <div class="links-window">
-                <!-- <transition name="slide"> -->
-                <div class="links-list" :class="{'offscreen-left': addLinkActive, 'onscreen-left': !addLinkActive}">
-                    <ul style="color: black;">
-                        <li v-for="favoriteLink in favoriteLinks" :key="favoriteLink.id">
-                            {{favoriteLink.title}}
-                            <a @click="deleteFavoriteLink(favoriteLink.id)" href="#">x</a>
-                        </li>
-                        <!-- <li>cool link 1</li>
+  <div>
+    <div
+      class="dropdown-triangle"
+      style="position: absolute; top: 30px; left: 30px"
+    ></div>
+    <div style="position: absolute; top: 40px">
+      <div class="links-window">
+        <div
+          class="links-list"
+          :class="{
+            'offscreen-left': addLinkActive,
+            'onscreen-left': !addLinkActive,
+          }"
+        >
+          <ul style="color: black">
+            <li v-for="favoriteLink in favoriteLinks" :key="favoriteLink.id">
+              {{ favoriteLink.title }}
+              <a @click="deleteFavoriteLink(favoriteLink.id)" href="#">x</a>
+            </li>
+            <!-- <li>cool link 1</li>
                         <li>cool link 2</li>
                         <li>cool link 3</li>
                         <li>cool link 4</li>
@@ -34,52 +42,42 @@
                         <li>cool link 4</li>
                         <li>cool link 5</li>
                         <li>cool link 6</li> -->
-                    </ul>
-                    
-                </div>
-                <!-- </transition> -->
-                
-                    <div class="funky-container">
-                        <!-- <transition name="slide"> -->
-                        <div class="add-link-menu" :class="{'onscreen-left': addLinkActive, 'offscreen-left': !addLinkActive}">
-                            <!-- <label>Title</label> -->
-                            <div @click.stop="deactivateAddLinkMenu" class="back-btn" style="color: black;">&larr;</div>
-                            <form action="">
-                                <label for="Title">Title</label>
-                                <input type="text" name="Title">
-                                <label for="Title">Link</label>
-                                <input type="text" label="Link">
-                                <a href="#" class="btn">Create</a>
-                            </form>
-                        </div>
-                        <!-- </transition> -->
-                    </div>
-                
-            </div>
-            <div v-if="!addLinkActive" class="links-window__add-link-button" :class="{'onscreen-left': addLinkActive, 'offscreen-left': !addLinkActive}">
-                <h3 style="" @click.stop="activateAddLinkMenu">+ Add Link</h3>
-            </div>
+          </ul>
         </div>
-        <!-- </transition> -->
 
-        <div class="funky-container">
-          <!-- <transition name="slide"> -->
+        <div
+          class="add-link-menu"
+          :class="{
+            'onscreen-left': addLinkActive,
+            'offscreen-left': !addLinkActive,
+          }"
+        >
+          <!-- <label>Title</label> -->
           <div
-            class="add-link-menu"
-            :class="{'onscreen-left': addLinkActive, 'offscreen-left': !addLinkActive}"
+            @click.stop="deactivateAddLinkMenu"
+            class="back-btn"
+            style="color: black"
           >
-            <!-- <label>Title</label> -->
-            <div @click.stop="deactivateAddLinkMenu" class="back-btn" style="color: black;">&larr;</div>
-            <form action>
-              <label for="Title">Title</label>
-              <input v-model="formInputTitle" type="text" name="Title" />
-              <label for="Title">Link</label>
-              <input v-model="formInputUrl" type="text" label="Link" />
-              <a @click="createFavoriteLink" href="#" class="btn">Create</a>
-            </form>
+            &larr;
           </div>
-          <!-- </transition> -->
+          <form action>
+            <label for="Title">Title</label>
+            <input v-model="formInputTitle" type="text" name="Title" />
+            <label for="Title">Link</label>
+            <input v-model="formInputUrl" type="text" label="Link" />
+            <a @click="createFavoriteLink" href="#" class="btn">Create</a>
+          </form>
         </div>
+      </div>
+      <div
+        v-if="!addLinkActive"
+        class="links-window__add-link-button"
+        :class="{
+          'onscreen-left': addLinkActive,
+          'offscreen-left': !addLinkActive,
+        }"
+      >
+        <h3 style="" @click.stop="activateAddLinkMenu">+ Add Link</h3>
       </div>
     </div>
   </div>
@@ -94,7 +92,7 @@ export default {
       addLinkActive: false,
       favoriteLinks: [],
       formInputTitle: "",
-      formInputUrl: ""
+      formInputUrl: "",
     };
   },
   methods: {
@@ -128,41 +126,41 @@ export default {
       axios
         .post("http://localhost:3000/api/v1/favorite_links", {
           title: this.formInputTitle,
-          url: this.formInputUrl
+          url: this.formInputUrl,
         })
-        .then(response => {
+        .then((response) => {
           console.log(response);
           this.fetchFavoriteLinks();
           this.deactivateAddLinkMenu();
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
     deleteFavoriteLink(id) {
       axios
         .delete(`http://localhost:3000/api/v1/favorite_links/${id}`)
-        .then(response => {
+        .then((response) => {
           console.log(response);
           this.fetchFavoriteLinks();
           //   this.deactivateAddLinkMenu();
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
     fetchFavoriteLinks() {
       axios
         .get("http://localhost:3000/api/v1/favorite_links")
-        .then(response => {
+        .then((response) => {
           console.log(response.data);
           debugger; // eslint-disable-line
           this.favoriteLinks = response.data;
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
-    }
+    },
   },
   computed: {
     magicalHeight() {
@@ -175,7 +173,7 @@ export default {
       } else {
         return child2.offsetHeight;
       }
-    }
+    },
   },
 
   mounted() {
@@ -184,14 +182,14 @@ export default {
 
     return axios
       .get("http://localhost:3000/api/v1/favorite_links")
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
         debugger; // eslint-disable-line
         this.favoriteLinks = response.data;
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
-  }
+  },
 };
 </script>
