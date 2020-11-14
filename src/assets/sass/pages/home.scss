@@ -1,38 +1,41 @@
 .img-backdrop {
-    width: 100vw;
-    background-image: url('../croatia_pic.jpg');
-    background-size: cover;
-    height: 100vh;
-    background-color: $dark-gray;
+  width: 100vw;
+  background: radial-gradient(transparent, black), url("../croatia_pic.jpg");
+  background-size: cover;
+  height: 100vh;
+  background-color: $dark-gray;
 }
 
 .custom-container {
-    margin: 20px;
-    position: relative;
-    width: 100vw;
-    height: 100vh;
+  padding: 20px;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+
+  .top-nav {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .banner-time {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-100%, -100%);
-    text-align: center; 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
 
-    h3 {
-        font-size: 115px;
-    }
+  h3 {
+    font-size: 115px;
+  }
 
-    h4 {
-        font-size: 50px;
-    }
-
-
+  h4 {
+    font-size: 50px;
+  }
 }
 
 body {
-    background-color: $dark-gray;
-    color: white;
-    font-family: Helvetica;
+  background-color: $dark-gray;
+  color: white;
+  font-family: Helvetica;
 }

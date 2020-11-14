@@ -1,12 +1,12 @@
 @import "abstracts/variables";
 
 // Bootstrap Scss
-@import '../../../node_modules/bootstrap/scss/functions';
-@import '../../../node_modules/bootstrap/scss/variables';
-@import '../../../node_modules/bootstrap/scss/mixins';
-@import '../../../node_modules/bootstrap/scss/bootstrap-grid';
-@import '../../../node_modules/bootstrap/scss/utilities';
-@import '../../../node_modules/bootstrap/scss/utilities';
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/mixins";
+@import "../../../node_modules/bootstrap/scss/bootstrap-grid";
+@import "../../../node_modules/bootstrap/scss/utilities";
+@import "../../../node_modules/bootstrap/scss/utilities";
 
 // Common Scss
 @import "base/base";
@@ -16,6 +16,7 @@
 // Project components
 @import "components/links-window";
 @import "components/button";
+@import "components/weather";
 
 // @import "base/animations";
 // @import "base/typography";
@@ -28,9 +29,7 @@
 // @import "components/story";
 // @import "components/bg-video";
 
-
 // @import "layouts/header";
 // @import "layouts/grid";
-
 
 // @import "pages/home";
