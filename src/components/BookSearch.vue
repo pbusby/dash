@@ -143,7 +143,7 @@ export default {
       })
     },
     submitBook() {
-      axios.post("create_book_record", {
+      api.post("create_book_record", {
         title: this.selectedBook.title,
         full_name: this.selectedBook.author_name[0],
         cover_url: `https://covers.openlibrary.org/b/id/${this.selectedBook.cover_i}-L.jpg`,
