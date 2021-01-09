@@ -73,6 +73,7 @@
 <script>
 import _ from "lodash";
 import axios from "axios";
+import api from "@/main.js"
 export default {
     data() {
     return {
@@ -103,7 +104,7 @@ export default {
       if (this.searchKeyword) {
         this.apiFetching = true;
         this.$emit('search-active', true);
-        axios.get(
+        api.get(
         `http://openlibrary.org/search.json?author=${this.searchKeyword}`
         ).then((response) => {
         debugger; // eslint-disable-line
@@ -127,7 +128,7 @@ export default {
       this.$nextTick( () => this.$refs.dropdowninput.focus() )
     },
     fetchGenres() {
-      axios.get('http://localhost:3000/api/v1/genres')
+      api.get('genres')
       .then((response) => {
               // debugger; // eslint-disable-line
         console.log(response)
@@ -135,14 +136,14 @@ export default {
       })
     },
     fetchBooks() {
-      axios.get('http://localhost:3000/api/v1/index')
+      api.get('index')
       .then((response) => {
         console.log(response);
         this.myBooks = response.data;
       })
     },
     submitBook() {
-      axios.post("http://localhost:3000/api/v1/create_book_record", {
+      axios.post("create_book_record", {
         title: this.selectedBook.title,
         full_name: this.selectedBook.author_name[0],
         cover_url: `http://covers.openlibrary.org/b/id/${this.selectedBook.cover_i}-L.jpg`,

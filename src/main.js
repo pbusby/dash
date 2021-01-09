@@ -1,7 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
+import axios from 'axios'
 import store from './store'
 import "./assets/sass/main.scss";
+
+const api = axios.create({
+  baseURL: (process.env.VUE_APP_API_PATH !== undefined) ? process.env.VUE_APP_API_PATH : 'https://pb-dash-api.herokuapp.com/'
+});
+
+export default api;
 
 Vue.config.productionTip = false
 

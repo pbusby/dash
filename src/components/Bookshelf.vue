@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import api from "@/main.js";
 // import BooksMenu from "./BooksMenu.vue"
 import BookSearch from "@/components/BookSearch.vue";
 import ReadingStats from "@/components/ReadingStats.vue";
@@ -61,13 +61,13 @@ export default {
     fetchBooks(bookType) {
       debugger; // eslint-disable-line
       if (bookType === 'read_next') {
-        axios.get('http://localhost:3000/api/v1/read_next_books')
+        api.get('read_next_books')
         .then((response) => {
         console.log(response);
         this.readNextBooks = response.data
         })
       } else {
-        axios.get('http://localhost:3000/api/v1/read_books')
+        api.get('read_books')
         .then((response) => {
         console.log(response);
         this.readBooks = response.data
@@ -75,19 +75,19 @@ export default {
       }
     },
     fetchReadBooks() {
-      axios.get('http://localhost:3000/api/v1/read_books')
+      api.get('read_books')
       .then((response) => {
         this.readBooks = response.data;
       })
     },
     fetchReadNextBooks() {
-      axios.get('http://localhost:3000/api/v1/read_next_books')
+      api.get('read_next_books')
       .then((response) => {
         this.readNextBooks = response.data;
       })
     },
     deleteReadNextBook(id) {
-      axios.delete(`http://localhost:3000/api/v1/books/${id}`)
+      api.delete(`books/${id}`)
       .then((response) => {
         console.log(response);
         debugger; // eslint-disable-line
