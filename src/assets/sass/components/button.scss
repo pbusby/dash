@@ -7,3 +7,19 @@
   border-radius: 30px;
   color: white;
 }
+
+.btn-skeleton {
+  display: inline-block;
+  text-decoration: none;
+  padding: 10px 10px;
+  // height: 30px;
+  background-color: transparent;
+  border-radius: 5px;
+  color: white;
+  border: 1px solid white;
+
+  &:hover {
+    transition: .3s;
+    background-color: $light-gray;
+  }
+}

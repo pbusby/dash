@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="dropdown-triangle" style="position: absolute; top: 50px; left: 30px"></div>
-    <div style="position: absolute; top: 60px">
+    <div v-if="favoriteLinkz" style="position: absolute; top: 60px">
       <div class="links-window" ref="linksWindow">
         <div
           class="wrapper"
@@ -18,9 +18,8 @@
               <!-- <a @click="deleteFavoriteLink(favoriteLink.id)" href="#">x</a> -->
               <!-- <div class="delete-btn">x</div> -->
               <!-- </li> -->
+              <a v-for="favoriteLink in favoriteLinks" :key="favoriteLink.id" :href="favoriteLink.url" target="_blank">
               <div
-                v-for="favoriteLink in favoriteLinks"
-                :key="favoriteLink.id"
                 class="link-row-wrapper"
               >
                 <div class="link-and-icon">
@@ -29,12 +28,8 @@
                 </div>
                 <div @click="deleteFavoriteLink(favoriteLink.id)" class="icon-wrapper">x</div>
               </div>
-              <!-- <li>cool link 1</li>
-              <li>cool link 2</li>
-              <li>cool link 3</li>
-              <li>cool link 4</li>
-              <li>cool link 5</li>
-              <li>cool link 6</li>
+              </a>
+              <ul>
               <li>cool link 1</li>
               <li>cool link 2</li>
               <li>cool link 3</li>
@@ -52,13 +47,20 @@
               <li>cool link 3</li>
               <li>cool link 4</li>
               <li>cool link 5</li>
-              <li>cool link 6</li>-->
-              <!-- </ul> -->
+              <li>cool link 6</li>
+              <li>cool link 1</li>
+              <li>cool link 2</li>
+              <li>cool link 3</li>
+              <li>cool link 4</li>
+              <li>cool link 5</li>
+              <li>cool link 6</li>
+              </ul>
             </div>
           </transition>
         </div>
 
         <div
+          v-if="favoriteLinkz"
           class="add-link-menu"
           :class="{
             'onscreen-left': addLinkActive,
@@ -168,7 +170,11 @@ export default {
         });
     }
   },
-  computed: {},
+  computed: {
+    favoriteLinkz() {
+      return this.favoriteLinks;
+    }
+  },
 
   mounted() {
     axios

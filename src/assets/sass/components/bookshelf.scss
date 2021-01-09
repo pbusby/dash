@@ -1,0 +1,47 @@
+.bookshelf-container {
+    width: 100vw;
+    height: 50vh;
+    position: fixed;
+    bottom: 0;
+    background-color: black;
+
+    .books-console {
+        width: 300px;
+        padding: 15px 20px 10px 20px;
+        border-right: 2px solid $light-gray;
+      
+        .books-menu {
+          // padding-top: 20px;
+      
+          &__menu-item {
+            padding-top: 20px;
+          }
+        }
+    }
+
+    .content-area {
+        padding: 20px 20px; height: 100%;
+    }
+
+    .bookshelf {
+        padding: 20px 20px;
+        width: 100%;
+        display: flex;
+
+        &__book-container {
+            position: relative;
+        }
+
+        &__book-cover {
+            height: 100px;
+            padding: 10px 10px;
+        }
+    }
+}
+
+.drawer-enter-active, .drawer-leave-active {
+    transition:  0.5s;
+}
+.drawer-enter, .drawer-leave-to {
+    transform: translatey(100%);
+}

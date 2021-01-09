@@ -6,6 +6,16 @@
   background-color: $dark-gray;
 }
 
+.multimedia-nav {
+  position: absolute;
+  right: 30px;
+  top: 200px;
+  display: flex;
+  height: 200px;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
 .custom-container {
   padding: 20px;
   position: relative;
@@ -20,7 +30,7 @@
 
 .banner-time {
   position: absolute;
-  top: 50%;
+  top: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;

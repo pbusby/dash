@@ -1,0 +1,129 @@
+<template>
+  <div class="bookshelf-container">
+    <div @click="closeBookshelf" class="delete-icon pull-right">x</div>
+      <div class="d-flex" style="height: 100%;">
+        <div class="books-console">
+          <book-search @search-active="toggleSearchStatus"/>
+          <div v-show="!bookSearchActive" class="books-menu">
+            <h3 @click="toggleRecentlyRead" class="books-menu__menu-item">Recently Read <span v-show="recentlyReadActive">&#10043;</span></h3>
+            <h3 @click="toggleReadingStats" class="books-menu__menu-item">Reading Stats <span v-show="readingStatsActive">&#10043;</span></h3>
+            <h3 @click="toggleDatabaseView" class="books-menu__menu-item">Database View <span v-show="databaseViewActive">&#10043;</span></h3>
+          </div>
+        </div>
+        <!-- <books-menu  @close-books-menu="toggleBooksMenu" @fetch-books="fetchBooks" /> -->
+        <div v-if="!readingStatsActive && !databaseViewActive" class="d-flex flex-column content-area">
+          <h3>Top 10 Favorites</h3>
+          <div class="bookshelf">
+            <div v-for="book in readBooks" :key="book.id">
+              <img v-if="book.photo" class="bookshelf__book-cover" :src="book.photo" />
+              <img v-else class="bookshelf__book-cover" src="@/assets/antique_cover_1.jpg" />
+            </div>
+          </div>
+          <h3>Reading Next</h3>
+          <div class="bookshelf">
+            <div class="bookshelf__book-container" v-for="(book, index) in readNextBooks" :key="index">
+              <img class="bookshelf__book-cover" :src="book.photo" />
+              <div @click="deleteReadNextBook(book.id)" class="delete-icon" style="position: absolute; top: 0;">x</div>
+            </div>
+          </div>
+        </div>
+        <reading-stats v-if="readingStatsActive"/>
+        <database-view v-if="databaseViewActive"/>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+// import BooksMenu from "./BooksMenu.vue"
+import BookSearch from "@/components/BookSearch.vue";
+import ReadingStats from "@/components/ReadingStats.vue";
+import DatabaseView from "@/components/DatabaseView.vue";
+
+export default {
+  components: {
+    BookSearch,
+    ReadingStats,
+    DatabaseView
+  },
+  data() {
+    return {
+      myBooks: [],
+      readBooks: [],
+      readNextBooks: [],
+      bookSearchActive: false,
+      recentlyReadActive: true,
+      readingStatsActive: false,
+      databaseViewActive: false
+    }
+  },
+  methods: {
+    fetchBooks(bookType) {
+      debugger; // eslint-disable-line
+      if (bookType === 'read_next') {
+        axios.get('http://localhost:3000/api/v1/read_next_books')
+        .then((response) => {
+        console.log(response);
+        this.readNextBooks = response.data
+        })
+      } else {
+        axios.get('http://localhost:3000/api/v1/read_books')
+        .then((response) => {
+        console.log(response);
+        this.readBooks = response.data
+        })
+      }
+    },
+    fetchReadBooks() {
+      axios.get('http://localhost:3000/api/v1/read_books')
+      .then((response) => {
+        this.readBooks = response.data;
+      })
+    },
+    fetchReadNextBooks() {
+      axios.get('http://localhost:3000/api/v1/read_next_books')
+      .then((response) => {
+        this.readNextBooks = response.data;
+      })
+    },
+    deleteReadNextBook(id) {
+      axios.delete(`http://localhost:3000/api/v1/books/${id}`)
+      .then((response) => {
+        console.log(response);
+        debugger; // eslint-disable-line
+        const myIndex = this.readNextBooks.findIndex(i => i.id === id);
+        this.readNextBooks.splice(myIndex, 1);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
+    closeBookshelf() {
+      this.$emit('close-bookshelf');
+    },
+    toggleSearchStatus(bool) {
+      this.bookSearchActive = bool;
+    },
+    toggleReadingStats() {
+      this.readingStatsActive = true;
+      this.databaseViewActive = false;
+      this.recentlyReadActive = false;
+    },
+    toggleDatabaseView() {
+      this.databaseViewActive = true;
+      this.readingStatsActive = false;
+      this.recentlyReadActive = false;
+    },
+    toggleRecentlyRead() {
+      this.bookSearchActive = false;
+      this.recentlyReadActive = true;
+      this.readingStatsActive = false;
+      this.databaseViewActive = false;
+    }
+  },
+  mounted() {
+    this.fetchReadBooks();
+    this.fetchReadNextBooks();
+  }
+}
+</script>
