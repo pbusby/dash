@@ -72,7 +72,6 @@
 </template>
 <script>
 import _ from "lodash";
-import axios from "axios";
 import api from "@/main.js"
 export default {
     data() {
