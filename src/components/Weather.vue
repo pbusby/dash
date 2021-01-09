@@ -52,7 +52,7 @@ export default {
   mounted() {
     axios
       .get(
-        `http://api.openweathermap.org/data/2.5/onecall?lat=38.7223&lon=9.1393&units=imperial&appid=${process.env.VUE_APP_OPENWEATHER_KEY}`
+        `https://api.openweathermap.org/data/2.5/onecall?lat=38.7223&lon=9.1393&units=imperial&appid=${process.env.VUE_APP_OPENWEATHER_KEY}`
       )
       .then(response => {
         // debugger; // eslint-disable-lint

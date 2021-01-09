@@ -91,7 +91,8 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+
+import api from "@/main.js";
 import GoogleSVG from "@/assets/icn/search.svg";
 
 export default {
@@ -129,8 +130,8 @@ export default {
       }
     },
     createFavoriteLink() {
-      axios
-        .post("http://localhost:3000/api/v1/favorite_links", {
+      api
+        .post("favorite_links", {
           title: this.formInputTitle,
           url: this.formInputUrl
         })
@@ -144,8 +145,8 @@ export default {
         });
     },
     deleteFavoriteLink(id) {
-      axios
-        .delete(`http://localhost:3000/api/v1/favorite_links/${id}`)
+      api
+        .delete(`favorite_links/${id}`)
         .then(response => {
           console.log(response);
           this.fetchFavoriteLinks();
@@ -156,8 +157,8 @@ export default {
         });
     },
     fetchFavoriteLinks() {
-      axios
-        .get("http://localhost:3000/api/v1/favorite_links")
+      api
+        .get("favorite_links")
         .then(response => {
           console.log(response.data);
           this.favoriteLinks = response.data;
@@ -177,8 +178,8 @@ export default {
   },
 
   mounted() {
-    axios
-      .get("http://localhost:3000/api/v1/favorite_links")
+    api
+      .get("favorite_links")
       .then(response => {
         console.log(response.data);
         // debugger; // eslint-disable-line

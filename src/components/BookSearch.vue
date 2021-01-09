@@ -105,7 +105,7 @@ export default {
         this.apiFetching = true;
         this.$emit('search-active', true);
         api.get(
-        `http://openlibrary.org/search.json?author=${this.searchKeyword}`
+        `https://openlibrary.org/search.json?author=${this.searchKeyword}`
         ).then((response) => {
         debugger; // eslint-disable-line
         this.resultsList = response.data.docs.slice(0,20);
@@ -146,7 +146,7 @@ export default {
       axios.post("create_book_record", {
         title: this.selectedBook.title,
         full_name: this.selectedBook.author_name[0],
-        cover_url: `http://covers.openlibrary.org/b/id/${this.selectedBook.cover_i}-L.jpg`,
+        cover_url: `https://covers.openlibrary.org/b/id/${this.selectedBook.cover_i}-L.jpg`,
         keyword: this.selectedBook.genre,
         status: this.bookStatus
       })
