@@ -5,7 +5,7 @@
 @import "../../../node_modules/bootstrap/scss/variables";
 @import "../../../node_modules/bootstrap/scss/mixins";
 @import "../../../node_modules/bootstrap/scss/bootstrap-grid";
-@import "../../../node_modules/bootstrap/scss/utilities";
+@import "../../../node_modules/bootstrap/scss/tables";
 @import "../../../node_modules/bootstrap/scss/utilities";
 
 // Common Scss
@@ -15,6 +15,7 @@
 @import "abstracts/mixins";
 // Project components
 @import "components/links-window";
+@import "components/database-view";
 @import "components/button";
 @import "components/weather";
 @import "components/bookshelf";
@@ -24,6 +25,11 @@ a {
     text-decoration: none;
     color: white;
 }
+
+// .table-striped>tbody>tr:nth-child(odd)>td, 
+// .table-striped>tbody>tr:nth-child(odd)>th {
+//    background-color: black; // Choose your own color here
+//  }
 
 // @import "base/animations";
 // @import "base/typography";

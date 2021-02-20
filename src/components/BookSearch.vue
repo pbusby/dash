@@ -34,12 +34,12 @@
               <label for="book-fiction">Fiction</label>
               <input v-model="bookFiction" class="dropdown-input" type="radio" id="book-fiction" name="category" />
               </div> -->
-              <div class="d-flex justify-content-between">
+              <div :class="this.bookStatus === 1 ? 'disabled-theme' : ''" class="d-flex justify-content-between transition-base">
               <div>
                   <label style="">Score:</label>
                   <div>
                     <span @click="decreaseScore" style="border-bottom: 1px solid white; padding: 8px 6px; display: inline-block;">-</span>
-                    <span style="border-bottom: 1px solid white; padding: 8px 0px; display: inline-block;">{{bookScore}}</span>
+                    <span style="border-bottom: 1px solid white; padding: 8px 0px; display: inline-block;">{{readStatus === 'Already Read' ? bookScore : 'NA'}}</span>
                     <span @click="increaseScore" style="border-bottom: 1px solid white; padding: 8px 5px; display: inline-block;">+</span>
                   </div>
               </div>
@@ -147,7 +147,8 @@ export default {
         full_name: this.selectedBook.author_name[0],
         cover_url: `https://covers.openlibrary.org/b/id/${this.selectedBook.cover_i}-L.jpg`,
         keyword: this.selectedBook.genre,
-        status: this.bookStatus
+        status: this.bookStatus,
+        score: this.bookStatus === 0 ? this.bookScore : null
       })
       .then((response) => {
         debugger; // eslint-disable-line
@@ -165,6 +166,7 @@ export default {
     resetBookSearch() {
       this.selectedBook = {};
       this.resultsList = [];
+      this.bookScore = 10;
       this.apiLoaded = false;
       this.$emit('search-active', false);
     },
@@ -182,6 +184,10 @@ export default {
   computed: {
     noBookSelected() {
       return Object.keys(this.selectedBook).length === 0
+    },
+    readStatus() {
+      debugger; // eslint-disable-line
+      return this.bookStatus
     }
    
   },

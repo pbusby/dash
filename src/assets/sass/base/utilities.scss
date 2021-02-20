@@ -49,3 +49,14 @@
     position: absolute;
     right: 0;
 }
+
+.disabled-theme {
+    label, span, p {
+        color: grey;
+        text-decoration: line-through;
+    }
+}
+
+.transition-base * {
+    transition: 0.5s all;
+}

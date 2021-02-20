@@ -1,0 +1,25 @@
+.table-wrapper {
+    margin-top: 32px;
+    height: 300px;
+    width: 100%;
+    overflow: auto;
+}
+
+.my-table {
+    background-color: #95999c;
+    // height: 20px;
+    width: 100%;
+    overflow: auto;
+    tr {
+        padding-bottom: 10px;
+    }
+
+    td {
+        padding: 10px 10px;
+        // border: 1px solid white;
+    }
+}
+
+.fixed {
+    position: fixed;
+}

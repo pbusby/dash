@@ -12,11 +12,59 @@
         </div>
         <!-- <books-menu  @close-books-menu="toggleBooksMenu" @fetch-books="fetchBooks" /> -->
         <div v-if="!readingStatsActive && !databaseViewActive" class="d-flex flex-column content-area">
-          <h3>Top 10 Favorites</h3>
-          <div class="bookshelf">
-            <div v-for="book in readBooks" :key="book.id">
-              <img v-if="book.photo" class="bookshelf__book-cover" :src="book.photo" />
-              <img v-else class="bookshelf__book-cover" src="@/assets/antique_cover_1.jpg" />
+          <!-- <h3>Top 10 Favorites</h3> -->
+          <h3>Bestsellers</h3>
+          <div v-if="!coverImagesLoaded" class="bookshelf">
+            <div class="bookshelf__book-container">
+              <div class="bookshelf__book-cover--animated-dummy"></div>
+              <div class="bookshelf__book-caption--animated-dummy"></div>
+            </div>
+            <div class="bookshelf__book-container">
+              <div class="bookshelf__book-cover--animated-dummy"></div>
+              <div class="bookshelf__book-caption--animated-dummy"></div>
+            </div>
+            <div class="bookshelf__book-container">
+              <div class="bookshelf__book-cover--animated-dummy"></div>
+              <div class="bookshelf__book-caption--animated-dummy"></div>
+            </div>
+            <div class="bookshelf__book-container">
+              <div class="bookshelf__book-cover--animated-dummy"></div>
+              <div class="bookshelf__book-caption--animated-dummy"></div>
+            </div>
+            <div class="bookshelf__book-container">
+              <div class="bookshelf__book-cover--animated-dummy"></div>
+              <div class="bookshelf__book-caption--animated-dummy"></div>
+            </div>
+            <div class="bookshelf__book-container">
+              <div class="bookshelf__book-cover--animated-dummy"></div>
+              <div class="bookshelf__book-caption--animated-dummy"></div>
+            </div>
+            <div class="bookshelf__book-container">
+              <div class="bookshelf__book-cover--animated-dummy"></div>
+              <div class="bookshelf__book-caption--animated-dummy"></div>
+            </div>
+            <div class="bookshelf__book-container">
+              <div class="bookshelf__book-cover--animated-dummy"></div>
+              <div class="bookshelf__book-caption--animated-dummy"></div>
+            </div>
+            <div class="bookshelf__book-container">
+              <div class="bookshelf__book-cover--animated-dummy"></div>
+              <div class="bookshelf__book-caption--animated-dummy"></div>
+            </div>
+            <div class="bookshelf__book-container">
+              <div class="bookshelf__book-cover--animated-dummy"></div>
+              <div class="bookshelf__book-caption--animated-dummy"></div>
+            </div>
+
+          </div>
+          <div v-show="coverImagesLoaded" class="bookshelf">
+            <!-- <div class="bookshelf__book-container" v-for="book in readBooks" :key="book.id"> -->
+            <div class="bookshelf__book-container" v-for="book in bestsellers" :key="book.id">
+              <img v-if="book.photo" class="bookshelf__book-cover" :src="book.photo" @load="incrementImageLoaded" />
+              <img v-else class="bookshelf__book-cover" :src="require('../assets/antique_cover_' + 1 + '.jpg')" @load="incrementImageLoaded" />
+              <div class="bookshelf__book-caption">
+                <p>{{book.title}}</p>
+              </div> 
             </div>
           </div>
           <h3>Reading Next</h3>
@@ -50,7 +98,10 @@ export default {
     return {
       myBooks: [],
       readBooks: [],
+      readBooksLoaded: false,
+      bookImagesLoaded: 0,
       readNextBooks: [],
+      bestsellers: [],
       bookSearchActive: false,
       recentlyReadActive: true,
       readingStatsActive: false,
@@ -59,7 +110,7 @@ export default {
   },
   methods: {
     fetchBooks(bookType) {
-      debugger; // eslint-disable-line
+      // debugger; // eslint-disable-line
       if (bookType === 'read_next') {
         api.get('read_next_books')
         .then((response) => {
@@ -77,20 +128,29 @@ export default {
     fetchReadBooks() {
       api.get('read_books')
       .then((response) => {
-        this.readBooks = response.data;
+        // debugger; //eslint-disable-line
+        this.readBooks = response.data.books;
+        this.readBooksLoaded = true;
       })
     },
     fetchReadNextBooks() {
       api.get('read_next_books')
       .then((response) => {
-        this.readNextBooks = response.data;
+        this.readNextBooks = response.data.books;
+      })
+    },
+    fetchBestsellers() {
+      api.get('bestsellers')
+      .then((response) => {
+        debugger; //eslint-disable-line
+        this.bestsellers = response.data;
       })
     },
     deleteReadNextBook(id) {
       api.delete(`books/${id}`)
       .then((response) => {
         console.log(response);
-        debugger; // eslint-disable-line
+        // debugger; // eslint-disable-line
         const myIndex = this.readNextBooks.findIndex(i => i.id === id);
         this.readNextBooks.splice(myIndex, 1);
       })
@@ -119,11 +179,47 @@ export default {
       this.recentlyReadActive = true;
       this.readingStatsActive = false;
       this.databaseViewActive = false;
+    },
+    checkImageLoadingProgress() {
+      
+    },
+    incrementImageLoaded() {
+                    // debugger; // eslint-disable-line
+
+      this.bookImagesLoaded += 1;
+      
+    },
+    coverRandomizer() {
+      return Math.ceil((Math.random() * 3)).toString();
+    }
+
+  },
+  computed: {
+    coverImagesLoaded() {
+              // debugger; // eslint-disable-line
+
+      return this.bookImagesLoaded >= 10;
     }
   },
-  mounted() {
+  created() {
     this.fetchReadBooks();
     this.fetchReadNextBooks();
+  },
+  mounted() {
+    this.fetchBestsellers();
+    this.fetchReadBooks();
+    this.fetchReadNextBooks();
+    // const bookCovers = document.querySelectorAll('.bookshelf__book-cover');
+    //           debugger //eslint-disable-line
+
+    // for (const img of bookCovers) {
+    //       debugger //eslint-disable-line
+    //   if (img.complete) {
+    //     this.incrementImageLoaded();
+    //   } else {
+    //     img.addEventListener('load', this.incrementImageLoaded);
+    //   }
+    // }
   }
 }
 </script>
