@@ -3,7 +3,7 @@
     <div @click="closeBookshelf" class="delete-icon pull-right">x</div>
       <div class="d-flex" style="height: 100%;">
         <div class="books-console">
-          <book-search @search-active="toggleSearchStatus"/>
+          <book-search @search-active="toggleSearchStatus" @fetch-books="fetchReadNextBooks"/>
           <div v-show="!bookSearchActive" class="books-menu">
             <h3 @click="toggleRecentlyRead" class="books-menu__menu-item">Recently Read <span v-show="recentlyReadActive">&#10043;</span></h3>
             <h3 @click="toggleReadingStats" class="books-menu__menu-item">Reading Stats <span v-show="readingStatsActive">&#10043;</span></h3>
@@ -71,8 +71,12 @@
           </div>
           <h3>Reading Next</h3>
           <div class="bookshelf">
-            <div class="bookshelf__book-container" v-for="(book, index) in readNextBooks" :key="index">
-              <img class="bookshelf__book-cover" :src="book.photo" />
+            <div class="bookshelf__book-container" v-for="book in readNextBooks" :key="book.id">
+              <img v-if="book.photo" class="bookshelf__book-cover" :src="book.photo" @load="incrementImageLoaded" />
+              <img v-else class="bookshelf__book-cover" :src="require('../assets/antique_cover_' + 1 + '.jpg')" @load="incrementImageLoaded" />
+              <div class="bookshelf__book-caption">
+                <p>{{book.title}}</p>
+              </div> 
               <div @click="deleteReadNextBook(book.id)" class="delete-icon" style="position: absolute; top: 0;">x</div>
             </div>
           </div>
@@ -151,6 +155,7 @@ export default {
       })
     },
     deleteReadNextBook(id) {
+      // debugger; //eslint-disable-line
       api.delete(`books/${id}`)
       .then((response) => {
         console.log(response);

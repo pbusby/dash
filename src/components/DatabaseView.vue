@@ -3,7 +3,7 @@
         <h3>Database View</h3>
         <div class="table-wrapper">
         <vuetable ref="vuetable"
-        api-url="http://localhost:3000/api/v1/read_books"
+        api-url="https://pb-dash-api.herokuapp.com/api/v1/read_books"
         pagination-path="pagination"
         data-path="books"
         :fields="['title', 'author', 'genre', 'category', 'status']"

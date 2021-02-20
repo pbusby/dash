@@ -156,7 +156,8 @@ export default {
         if (response.status === 200) {
           this.bookSavedMenu = true;
           this.resetBookSearch();
-          this.$emit('fetch-books', response.data.status);
+          // this.$emit('fetch-books', response.data.status);
+          this.$emit('fetch-books');
         }
       })
       .catch((error) => {
