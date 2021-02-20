@@ -58,6 +58,7 @@
 
           </div>
           <div v-show="coverImagesLoaded" class="bookshelf">
+            <!-- uncomment to switch back to top 10 from my personal -->
             <!-- <div class="bookshelf__book-container" v-for="book in readBooks" :key="book.id"> -->
             <div class="bookshelf__book-container" v-for="book in bestsellers" :key="book.id">
               <img v-if="book.photo" class="bookshelf__book-cover" :src="book.photo" @load="incrementImageLoaded" />
@@ -66,6 +67,7 @@
                 <p>{{book.title}}</p>
               </div> 
             </div>
+            <div @click="toggleBestsellersPage" style="color: white;">></div>
           </div>
           <h3>Reading Next</h3>
           <div class="bookshelf">
@@ -102,6 +104,7 @@ export default {
       bookImagesLoaded: 0,
       readNextBooks: [],
       bestsellers: [],
+      page: 1,
       bookSearchActive: false,
       recentlyReadActive: true,
       readingStatsActive: false,
@@ -136,13 +139,14 @@ export default {
     fetchReadNextBooks() {
       api.get('read_next_books')
       .then((response) => {
+        // debugger; //eslint-disable-line
         this.readNextBooks = response.data.books;
       })
     },
     fetchBestsellers() {
-      api.get('bestsellers')
+      api.get(`bestsellers?page=${this.page}`)
       .then((response) => {
-        debugger; //eslint-disable-line
+        // debugger; //eslint-disable-line
         this.bestsellers = response.data;
       })
     },
@@ -164,6 +168,14 @@ export default {
     toggleSearchStatus(bool) {
       this.bookSearchActive = bool;
     },
+    toggleBestsellersPage() {
+      if (this.page === 1) {
+        this.page = 2;
+      } else {
+        this.page = 1;
+      }
+      this.fetchBestsellers();
+    },
     toggleReadingStats() {
       this.readingStatsActive = true;
       this.databaseViewActive = false;
@@ -184,10 +196,8 @@ export default {
       
     },
     incrementImageLoaded() {
-                    // debugger; // eslint-disable-line
-
+      // debugger; // eslint-disable-line
       this.bookImagesLoaded += 1;
-      
     },
     coverRandomizer() {
       return Math.ceil((Math.random() * 3)).toString();
@@ -196,21 +206,16 @@ export default {
   },
   computed: {
     coverImagesLoaded() {
-              // debugger; // eslint-disable-line
-
+      // debugger; // eslint-disable-line
       return this.bookImagesLoaded >= 10;
     }
-  },
-  created() {
-    this.fetchReadBooks();
-    this.fetchReadNextBooks();
   },
   mounted() {
     this.fetchBestsellers();
     this.fetchReadBooks();
     this.fetchReadNextBooks();
     // const bookCovers = document.querySelectorAll('.bookshelf__book-cover');
-    //           debugger //eslint-disable-line
+    // debugger //eslint-disable-line
 
     // for (const img of bookCovers) {
     //       debugger //eslint-disable-line

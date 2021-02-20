@@ -28,10 +28,11 @@
         padding: 20px 20px;
         width: 100%;
         display: flex;
+        align-items: center;
 
         &__book-container {
             position: relative;
-            width: 200px;
+            margin-right: 20px;
         }
 
         &__book-cover {

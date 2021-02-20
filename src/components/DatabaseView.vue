@@ -8,7 +8,7 @@
         data-path="books"
         :fields="['title', 'author', 'genre', 'category', 'status']"
         @vuetable:pagination-data="onPaginationData"
-        :css="{tableClass: 'table table-striped table-dark', loadingClass: 'Please wait...' }"
+        :css="{tableClass: 'table table-striped table-dark', loadingClass: 'Please wait...'  }"
         />
         </div>
         <vuetable-pagination ref="pagination" @vuetable-pagination:change-page="onChangePage" />
