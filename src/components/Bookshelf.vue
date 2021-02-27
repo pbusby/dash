@@ -3,7 +3,7 @@
     <div @click="closeBookshelf" class="delete-icon pull-right">x</div>
       <div class="d-flex" style="height: 100%;">
         <div class="books-console">
-          <book-search @search-active="toggleSearchStatus" @fetch-books="fetchReadNextBooks"/>
+          <book-search @search-active="toggleSearchStatus" @fetch-books="fetchReadNextBooks" :selected-bestseller="selectedBestseller" />
           <div v-show="!bookSearchActive" class="books-menu">
             <h3 @click="toggleRecentlyRead" class="books-menu__menu-item">Recently Read <span v-show="recentlyReadActive">&#10043;</span></h3>
             <h3 @click="toggleReadingStats" class="books-menu__menu-item">Reading Stats <span v-show="readingStatsActive">&#10043;</span></h3>
@@ -60,13 +60,15 @@
           <div v-show="coverImagesLoaded" class="bookshelf">
             <!-- uncomment to switch back to top 10 from my personal -->
             <!-- <div class="bookshelf__book-container" v-for="book in readBooks" :key="book.id"> -->
-            <div class="bookshelf__book-container" v-for="book in bestsellers" :key="book.id">
+            <book :title="book.title" :author="book.author" :photo="book.photo" @select-bestseller="selectBestseller" @loaded="incrementImageLoaded" v-for="book in bestsellers" :key="book.id" />
+
+            <!-- <div class="bookshelf__book-container" v-for="book in bestsellers" :key="book.id">
               <img v-if="book.photo" class="bookshelf__book-cover" :src="book.photo" @load="incrementImageLoaded" />
               <img v-else class="bookshelf__book-cover" :src="require('../assets/antique_cover_' + 1 + '.jpg')" @load="incrementImageLoaded" />
               <div class="bookshelf__book-caption">
                 <p>{{book.title}}</p>
               </div> 
-            </div>
+            </div> -->
             <div @click="toggleBestsellersPage" style="color: white;">></div>
           </div>
           <h3>Reading Next</h3>
@@ -89,6 +91,7 @@
 
 <script>
 import api from "@/main.js";
+import Book from "@/components/Book.vue";
 // import BooksMenu from "./BooksMenu.vue"
 import BookSearch from "@/components/BookSearch.vue";
 import ReadingStats from "@/components/ReadingStats.vue";
@@ -96,6 +99,7 @@ import DatabaseView from "@/components/DatabaseView.vue";
 
 export default {
   components: {
+    Book,
     BookSearch,
     ReadingStats,
     DatabaseView
@@ -108,6 +112,7 @@ export default {
       bookImagesLoaded: 0,
       readNextBooks: [],
       bestsellers: [],
+      selectedBestseller: {},
       page: 1,
       bookSearchActive: false,
       recentlyReadActive: true,
@@ -197,8 +202,9 @@ export default {
       this.readingStatsActive = false;
       this.databaseViewActive = false;
     },
-    checkImageLoadingProgress() {
-      
+    selectBestseller(data) {
+      this.selectedBestseller = data;
+      this.bookSearchActive = true;
     },
     incrementImageLoaded() {
       // debugger; // eslint-disable-line

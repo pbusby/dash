@@ -74,6 +74,9 @@
 import _ from "lodash";
 import api from "@/main.js"
 export default {
+    props: {
+      selectedBestseller: Object
+    },
     data() {
     return {
       addMenuClosed: false,
@@ -180,6 +183,12 @@ export default {
       if (this.bookScore > 1) {
         this.bookScore -= 1;
       }
+    }
+  },
+  watch: {
+    selectedBestseller: function(value) {
+      this.selectedBook = value;
+      this.searchKeyword = '';
     }
   },
   computed: {
