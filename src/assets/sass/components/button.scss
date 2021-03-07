@@ -3,7 +3,7 @@
   text-decoration: none;
   padding: 10px 30px;
   // height: 30px;
-  background-color: $light-gray;
+  background-color: $gray;
   border-radius: 30px;
   color: white;
 }
@@ -20,6 +20,6 @@
 
   &:hover {
     transition: .3s;
-    background-color: $light-gray;
+    background-color: $gray;
   }
 }

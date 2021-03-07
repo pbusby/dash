@@ -10,7 +10,7 @@
               </div>
           </div>
           <!-- book submit form -->
-          <div v-else>
+          <div v-else :class='{"animate-search-text" : animate}' @animationend="animate = false">
               <!-- <div @click="resetBook" class="dropdown-selected">
               <p class="book-title">{{selectedBook.title}}</p>
               <p class="author">{{selectedBook.author_name[0]}}</p>  
@@ -39,7 +39,7 @@
                   <label style="">Score:</label>
                   <div>
                     <span @click="decreaseScore" style="border-bottom: 1px solid white; padding: 8px 6px; display: inline-block;">-</span>
-                    <span style="border-bottom: 1px solid white; padding: 8px 0px; display: inline-block;">{{readStatus === 'Already Read' ? bookScore : 'NA'}}</span>
+                    <span style="border-bottom: 1px solid white; padding: 8px 0px; display: inline-block;">{{readStatus === 0 ? bookScore : 'NA'}}</span>
                     <span @click="increaseScore" style="border-bottom: 1px solid white; padding: 8px 5px; display: inline-block;">+</span>
                   </div>
               </div>
@@ -63,9 +63,9 @@
                 <div class="save-alert">Book saved!</div>
             </div>
             <div class="d-flex justify-content-around">
-                <a @click="bookSavedMenu = false" href="#" class="btn mt-3">Add Another</a>
+                <a @click="bookSavedMenu = false" href="#" class="btn-skeleton mt-3">Add Another</a>
                 <!-- add emit event here to close entire books section -->
-                <a @click="resetBookSearch" href="#" class="btn mt-3">Finish</a>
+                <a @click="resetBookSearch" href="#" class="btn-skeleton mt-3">Finish</a>
             </div>
         </div>
     </div>
@@ -97,7 +97,8 @@ export default {
       readBooks: [],
       toReadBooks: [],
       bookScore: 10,
-      genres: []
+      genres: [],
+      animate: false
     };
   },
   methods: {
@@ -188,6 +189,7 @@ export default {
   watch: {
     selectedBestseller: function(value) {
       this.selectedBook = value;
+      this.animate = true;
       this.searchKeyword = '';
     }
   },

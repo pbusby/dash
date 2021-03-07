@@ -79,7 +79,7 @@
               <div class="bookshelf__book-caption">
                 <p>{{book.title}}</p>
               </div> 
-              <div @click="deleteReadNextBook(book.id)" class="delete-icon" style="position: absolute; top: 0;">x</div>
+              <div @click="deleteReadNextBook(book.id)" class="delete-icon" style="position: absolute; top: 5px; right: -15px;">x</div>
             </div>
           </div>
         </div>

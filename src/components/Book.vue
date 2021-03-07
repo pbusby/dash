@@ -1,5 +1,5 @@
 <template>
-    <div class="bookshelf__book-container" @click="passDataToParent">
+    <div class="bookshelf__book-container" :class="{'selected-book': animate}" @click="passDataToParent" @animationend="animate = false">
         <img v-if="photo" class="bookshelf__book-cover" :src="photo" @load="imageLoaded" />
         <img v-else class="bookshelf__book-cover" :src="require('../assets/antique_cover_' + 1 + '.jpg')" @load="imageLoaded" />
         <div class="bookshelf__book-caption">
@@ -19,7 +19,7 @@ export default {
     },
     data() {
         return {
-
+            animate: false
         }
     },
     methods: {
@@ -27,6 +27,7 @@ export default {
             this.$emit('loaded');
         },
         passDataToParent() {
+            this.animate = true;
             this.$emit('select-bestseller', {title: this.title, author_name: this.author, photo: this.photo })
         }
 
